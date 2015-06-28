@@ -1,0 +1,12 @@
+=============================================================================
+==  NOTICE file for use with the Apache License, Version 2.0,              ==
+==  in this case for the Edgewise distribution.                            ==
+=============================================================================
+
+Edgewise
+
+This product includes software developed by
+Bobby Norton (bobby@testedminds.com)
+
+For additional credits (generally to people who reported problems)
+see the CREDITS.txt file.
