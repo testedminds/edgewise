@@ -24,6 +24,6 @@
 (defn props
   ([t]
    (if (seq (:vertex t))
-     (map #(dissoc % :inE :outE) (vals (select-keys (:vertex-data (:g t)) (:vertex t))))
-     (vals (select-keys (:edge-data (:g t)) (:edge t)))))
+     (map #(dissoc % :inE :outE) (select-vals (:vertex-data (:g t)) (:vertex t)))
+     (select-vals (:edge-data (:g t)) (:edge t))))
   ([t prop] (map prop (props t))))

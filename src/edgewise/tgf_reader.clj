@@ -3,12 +3,13 @@
   (:require [edgewise.graph :refer :all]))
 
 (defn- line->vertex [g line]
-  (let [[x y] (clojure.string/split line #" ")]
-    (add-vertex g (Integer. x) y)))
+  (let [[x label] (rest (re-matches #"(\d+) (.+)$" line))]
+    (add-vertex g (Integer. x) label)))
 
 (defn- line->edge [g line]
-  (let [[x y label] (clojure.string/split line #" ")]
-    (add-edge g (Integer. x) (Integer. y))))
+  (let [[x y lbl] (rest (re-matches #"(\d+) (\d+)( .+)?$" line))
+        label (if lbl (clojure.string/trim lbl) "")]
+    (add-edge g (Integer. x) (Integer. y) {:label label})))
 
 (defn- next-line [[line & rest] {:keys [g line-fn] :as config}]
   #(cond (nil? line) g

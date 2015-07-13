@@ -12,4 +12,4 @@
 (deftest should-read-tgf-from-string
   (let [str "1 Mike Ditka\n2 DA BEARS\n3 Chicago\n#\n1 2 coaches\n1 3 lives in\n"
         g (string->tgf str)]
-    (is (= ["Chicago" "DA"] (-> (v g 1) outE inV (props :label) sort)))))
+    (is (= ["Chicago" "DA BEARS"] (-> (v g 1) outE inV (props :label) sort)))))
