@@ -1,6 +1,6 @@
 # Edgewise
 
-Edgewise is a minimal property graph implementation.
+Edgewise is a simple utility to cleanse, fold, and manipulate networks in Clojure.
 
 ## Usage
 
