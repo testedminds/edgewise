@@ -19,3 +19,11 @@
   (traversal (:g t)
    (map :inV
         (select-vals (:edge-data (:g t)) (:edge t))) []))
+
+;; get the property map for all vertices
+(defn props
+  ([t]
+   (if (seq (:vertex t))
+     (map #(dissoc % :inE :outE) (vals (select-keys (:vertex-data (:g t)) (:vertex t))))
+     (vals (select-keys (:edge-data (:g t)) (:edge t)))))
+  ([t prop] (map prop (props t))))

@@ -1,4 +1,5 @@
 (ns edgewise.tgf-reader
+  (:import [java.io BufferedReader StringReader])
   (:require [edgewise.graph :refer :all]))
 
 (defn- line->vertex [g line]
@@ -15,10 +16,19 @@
      :else
      (next-line rest (assoc config :g (line-fn g line)))))
 
-;; Parsing the TGF file amounts to a simple FSM with two states,
+;; Parsing TGF amounts to a simple FSM with two states,
 ;; :vertex and :edge.
 ;; Mutually recursive functions work well for this.
-(defn read-tgf [file g]
-  (with-open [rdr (clojure.java.io/reader file)]
-    (trampoline next-line (line-seq rdr) {:g g :line-fn line->vertex})))
+(defn reader->tgf
+  ([reader] (reader->tgf reader (empty-graph)))
+  ([reader g]
+   (with-open [rdr reader]
+     (trampoline next-line (line-seq rdr) {:g g :line-fn line->vertex}))))
 
+(defn file->tgf [file]
+  (reader->tgf (clojure.java.io/reader file)))
+
+;; Parses TGF strings of the form
+;; "1 Mike Ditka\n2 DA BEARS\n3 Chicago\n#\n1 2 coaches\n1 3 lives in"
+(defn string->tgf [str]
+  (reader->tgf (BufferedReader. (StringReader. str))))

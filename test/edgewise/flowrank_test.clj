@@ -32,7 +32,7 @@
 (deftest should-compute-simple-flowrank
   (let [g (build-test-graph)
         rank (flowrank 10 (v g))
-        tgf (read-tgf "data/flowrank.tgf" (empty-graph))
+        tgf (file->tgf "data/flowrank.tgf")
         tgf-rank (flowrank 10 (v tgf))]
     (is (= (first (first rank)) 8))
     (is (= rank tgf-rank))))
