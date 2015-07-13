@@ -1,6 +1,9 @@
 (ns edgewise.traversal
   (:require [edgewise.util :refer [select-vals]]))
 
+;; all fn's in this namespace produce traversals
+;; to allow for easy composition.
+
 (defn traversal [g v-ids e-ids]
   {:g g :vertex v-ids :edge e-ids})
 
@@ -19,11 +22,3 @@
   (traversal (:g t)
    (map :inV
         (select-vals (:edge-data (:g t)) (:edge t))) []))
-
-;; get the property map for all vertices
-(defn props
-  ([t]
-   (if (seq (:vertex t))
-     (map #(dissoc % :inE :outE) (select-vals (:vertex-data (:g t)) (:vertex t)))
-     (select-vals (:edge-data (:g t)) (:edge t))))
-  ([t prop] (map prop (props t))))

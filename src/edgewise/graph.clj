@@ -18,7 +18,7 @@
 (defn add-vertex
   ([g label] (add-vertex g (inc (:vertex-id g)) label))
   ([g id label]
-   (let [v {:outE [] :inE [] :label label}
+   (let [v {:outE [] :inE [] :label label :_id id}
          new-v-data (assoc (:vertex-data g) id v)]
      (-> (assoc g :vertex-data new-v-data)
          (assoc :vertex-id id)
@@ -27,7 +27,7 @@
 (defn add-edge
   ([g source-id target-id props]
    (let [next-e-id (inc (:edge-id g))
-         edge (assoc props :outV source-id :inV target-id)
+         edge (assoc props :outV source-id :inV target-id :_id next-e-id)
          v (:vertex-data g)
          new-out-e (conj ((v source-id) :outE) next-e-id)
          new-out-v (assoc (v source-id) :outE new-out-e)

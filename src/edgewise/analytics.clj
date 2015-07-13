@@ -1,5 +1,6 @@
 (ns edgewise.analytics
-  (:require [edgewise.traversal :refer :all]))
+  (:require [edgewise.traversal :refer :all]
+            [edgewise.util :refer :all]))
 
 ;; eigenvector rank algorithm
 (defn flowrank [n t]
@@ -14,3 +15,11 @@
 (defn groupcount [hist t]
   (merge-with + hist (frequencies (:vertex t))))
 
+;; get the property map for all vertices
+(defn props
+  ([t]
+   (if (seq (:vertex t))
+     (map #(dissoc % :inE :outE) (select-vals (:vertex-data (:g t)) (:vertex t)))
+     (select-vals (:edge-data (:g t)) (:edge t))))
+  ([t & keys]
+   (map #(select-keys % keys) (props t))))
