@@ -1,6 +1,6 @@
 # Edgewise
 
-Edgewise is a simple utility to cleanse, fold, and manipulate networks in Clojure.
+Edgewise is a simple tool and library for representing and computing on networks (graphs) in Clojure.
 
 ## Usage
 

@@ -18,11 +18,13 @@
 (defn add-vertex
   ([g label] (add-vertex g (inc (:vertex-id g)) label))
   ([g id label]
-   (let [v {:outE [] :inE [] :label label :_id id}
+   (let [existing (((:vertex-index g) :label) label)
+         v {:outE [] :inE [] :label label :_id id}
          new-v-data (assoc (:vertex-data g) id v)]
-     (-> (assoc g :vertex-data new-v-data)
-         (assoc :vertex-id id)
-         (update-vertex-index :label label id)))))
+     (if existing g
+         (-> (assoc g :vertex-data new-v-data)
+             (assoc :vertex-id id)
+             (update-vertex-index :label label id))))))
 
 (defn add-edge
   ([g source-id target-id props]
