@@ -1,4 +1,4 @@
-(ns edgewise.tgf-reader
+(ns edgewise.tgf.reader
   (:import [java.io BufferedReader StringReader])
   (:require [edgewise.graph :refer :all]))
 
@@ -29,7 +29,10 @@
 (defn file->tgf [file]
   (reader->tgf (clojure.java.io/reader file)))
 
-;; Parses TGF strings of the form
-;; "1 Mike Ditka\n2 DA BEARS\n3 Chicago\n#\n1 2 coaches\n1 3 lives in"
-(defn string->tgf [str]
+(defn string->tgf
+  "Parses TGF strings of the form:
+   1 Mike Ditka\n2 DA BEARS\n3 Chicago\n#\n1 2 coaches\n1 3 lives in"
+  [str]
   (reader->tgf (BufferedReader. (StringReader. str))))
+
+

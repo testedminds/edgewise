@@ -3,7 +3,7 @@
             [edgewise.analytics :refer :all]
             [edgewise.graph :refer :all]
             [edgewise.traversal :refer :all]
-            [edgewise.tgf-reader :refer :all]))
+            [edgewise.tgf.reader :refer :all]))
 
 (deftest should-handle-duplicate-vertices
   (let [g (-> (empty-graph)

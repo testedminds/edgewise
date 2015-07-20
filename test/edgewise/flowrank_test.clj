@@ -3,7 +3,7 @@
             [edgewise.analytics :refer :all]
             [edgewise.graph :refer :all]
             [edgewise.traversal :refer :all]
-            [edgewise.tgf-reader :refer :all]))
+            [edgewise.tgf.reader :refer :all]))
 
 ;; define a sample graph based on http://www.ams.org/samplings/feature-column/fcarc-pagerank
 (defn build-test-graph []

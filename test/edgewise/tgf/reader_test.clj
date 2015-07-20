@@ -1,6 +1,6 @@
-(ns edgewise.tgf-reader-test
+(ns edgewise.tgf.reader-test
   (:require [clojure.test :refer :all]
-            [edgewise.tgf-reader :refer :all]
+            [edgewise.tgf.reader :refer :all]
             [edgewise.graph :refer :all]
             [edgewise.traversal :refer :all]
             [edgewise.analytics :refer :all]))
