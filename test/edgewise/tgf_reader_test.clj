@@ -13,9 +13,9 @@
 (deftest should-read-tgf-from-string
   (let [str "1 Mike Ditka\n2 DA BEARS\n3 Chicago\n#\n1 2 coaches\n1 3 lives in\n"
         g (string->tgf str)]
-    (is (= ["Chicago" "DA BEARS"]
-           (sort (mapcat vals (-> g (v 1) outE inV (props :label))))))
+    (is (= [["Chicago"] ["DA BEARS"]]
+           (sort (-> g (v 1) outE inV (props :label)))))
     (is (= [{:label "DA BEARS", :_id 2} {:label "Chicago", :_id 3}]
            (-> g (v 1) outE inV props)))
-    (is (= [{:label "coaches", :_id 1} {:label "lives in", :_id 2}]
+    (is (= [["coaches" 1] ["lives in" 2]]
            (-> g (v 1) outE (props :label :_id))))))

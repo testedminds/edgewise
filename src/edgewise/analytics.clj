@@ -22,4 +22,4 @@
      (map #(dissoc % :inE :outE) (select-vals (:vertex-data (:g t)) (:vertex t)))
      (select-vals (:edge-data (:g t)) (:edge t))))
   ([t & keys]
-   (map #(select-keys % keys) (props t))))
+   (mapv #(select-vals % keys) (props t))))

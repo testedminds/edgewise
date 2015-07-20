@@ -15,10 +15,13 @@
         new-v-index (assoc index property update)]
     (assoc g :vertex-index new-v-index)))
 
+(defn- label-index [g label]
+  (((:vertex-index g) :label) label))
+
 (defn add-vertex
   ([g label] (add-vertex g (inc (:vertex-id g)) label))
   ([g id label]
-   (let [existing (((:vertex-index g) :label) label)
+   (let [existing (label-index g label)
          v {:outE [] :inE [] :label label :_id id}
          new-v-data (assoc (:vertex-data g) id v)]
      (if existing g
@@ -26,20 +29,35 @@
              (assoc :vertex-id id)
              (update-vertex-index :label label id))))))
 
-(defn add-edge
-  ([g source-id target-id props]
-   (let [next-e-id (inc (:edge-id g))
-         edge (assoc props :outV source-id :inV target-id :_id next-e-id)
-         v (:vertex-data g)
-         new-out-e (conj ((v source-id) :outE) next-e-id)
-         new-out-v (assoc (v source-id) :outE new-out-e)
-         new-in-e  (conj ((v target-id) :inE) next-e-id)
-         new-in-v  (assoc (v target-id) :inE new-in-e)
-         new-edge-data (assoc (:edge-data g) next-e-id edge)
-         new-vertex-data (-> (assoc v source-id new-out-v)
-                             (assoc target-id new-in-v))]
-     (-> (assoc g :edge-data new-edge-data)
-         (assoc :vertex-data new-vertex-data)
-         (assoc :edge-id next-e-id))))
-  ([g source-id target-id] (add-edge g source-id target-id {})))
+(defn- add-edge-by-id [g source-id target-id props]
+  (let [next-e-id (inc (:edge-id g))
+        edge (assoc props :outV source-id :inV target-id :_id next-e-id)
+        v (:vertex-data g)
+        new-out-e (conj ((v source-id) :outE) next-e-id)
+        new-out-v (assoc (v source-id) :outE new-out-e)
+        new-in-e  (conj ((v target-id) :inE) next-e-id)
+        new-in-v  (assoc (v target-id) :inE new-in-e)
+        new-edge-data (assoc (:edge-data g) next-e-id edge)
+        new-vertex-data (-> (assoc v source-id new-out-v)
+                            (assoc target-id new-in-v))]
+    (-> (assoc g :edge-data new-edge-data)
+        (assoc :vertex-data new-vertex-data)
+        (assoc :edge-id next-e-id))))
 
+(defmulti add-edge* (fn [g source-id target-id props] [(type source-id) (type target-id)]))
+
+(defmethod add-edge* [Number Number]
+  [g source-id target-id props]
+  (add-edge-by-id g source-id target-id props))
+
+(defmethod add-edge* [String String]
+  [g source-label target-label props]
+  (let [g-with-v (-> (add-vertex g source-label)
+                     (add-vertex target-label))
+        source-id (label-index g-with-v source-label)
+        target-id (label-index g-with-v target-label)]
+    (add-edge-by-id g-with-v source-id target-id props)))
+
+(defn add-edge
+  ([g source-id target-id props] (add-edge* g source-id target-id props))
+  ([g source-id target-id] (add-edge g source-id target-id {})))

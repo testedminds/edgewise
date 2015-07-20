@@ -13,6 +13,11 @@
   ([g property value]
    (traversal g [(((:vertex-index g) property) value)] [])))
 
+(defn inE [t]
+  (traversal (:g t) []
+    (mapcat :inE
+            (select-vals (:vertex-data (:g t)) (:vertex t)))))
+
 (defn outE [t]
   (traversal (:g t) []
     (mapcat :outE
@@ -21,4 +26,9 @@
 (defn inV [t]
   (traversal (:g t)
    (map :inV
+        (select-vals (:edge-data (:g t)) (:edge t))) []))
+
+(defn outV [t]
+  (traversal (:g t)
+   (map :outV
         (select-vals (:edge-data (:g t)) (:edge t))) []))
