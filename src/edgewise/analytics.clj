@@ -13,7 +13,6 @@
 (defn groupcount [hist t]
   (merge-with + hist (frequencies (:vertex t))))
 
-;; get the property map for all vertices
 (defn props
   ([t]
    (if (seq (:vertex t))

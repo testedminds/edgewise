@@ -30,7 +30,7 @@
 (deftest should-compute-simple-flowrank
   (let [g (build-test-graph)
         rank (flowrank 10 (v g))
-        tgf (file->tgf "data/flowrank.tgf")
+        tgf (read-tgf (java.io.File. "data/flowrank.tgf"))
         tgf-rank (flowrank 10 (v tgf))]
     (is (= (first (first rank)) 8))
     (is (= rank tgf-rank))))

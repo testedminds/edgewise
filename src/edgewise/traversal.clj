@@ -12,6 +12,10 @@
   ([g property value]
    (traversal g [(((:vertex-index g) property) value)] [])))
 
+(defn e
+  ([g] (traversal g [] (keys (:edge-data g))))
+  ([g id] (traversal g [] [id])))
+
 (defn inE [t]
   (traversal (:g t) []
     (mapcat :inE

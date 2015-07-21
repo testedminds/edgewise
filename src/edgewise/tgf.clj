@@ -3,4 +3,3 @@
 (load "tgf/reader")
 (load "tgf/writer")
 
-nil
