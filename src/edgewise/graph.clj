@@ -1,4 +1,4 @@
-(ns edgewise.graph)
+(in-ns 'edgewise.core)
 
 (defn empty-graph []
   {:vertex-id 0
@@ -8,7 +8,7 @@
    :edge-data {}
    })
 
-(defn update-vertex-index [g property value id]
+(defn- update-vertex-index [g property value id]
   (let [index (:vertex-index g)
         property-index (index property)
         update (assoc property-index value id)

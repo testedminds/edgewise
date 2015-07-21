@@ -1,6 +1,4 @@
-(ns edgewise.analytics
-  (:require [edgewise.traversal :refer :all]
-            [edgewise.util :refer :all]))
+(in-ns 'edgewise.core)
 
 ;; eigenvector rank algorithm
 (defn flowrank [n t]

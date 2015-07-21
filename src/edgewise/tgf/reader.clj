@@ -1,6 +1,6 @@
-(ns edgewise.tgf.reader
-  (:import [java.io BufferedReader StringReader])
-  (:require [edgewise.graph :refer :all]))
+(in-ns 'edgewise.tgf)
+(import [java.io BufferedReader StringReader])
+(require '[edgewise.core :refer :all])
 
 (defn- line->vertex [g line]
   (let [[x label] (rest (re-matches #"(\d+) (.+)$" line))]

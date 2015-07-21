@@ -1,9 +1,7 @@
 (ns edgewise.tgf.reader-test
   (:require [clojure.test :refer :all]
-            [edgewise.tgf.reader :refer :all]
-            [edgewise.graph :refer :all]
-            [edgewise.traversal :refer :all]
-            [edgewise.analytics :refer :all]))
+            [edgewise.core :refer :all]
+            [edgewise.tgf :refer :all]))
 
 (deftest should-read-well-formed-tgf-from-file
   (let [g (file->tgf "data/flowrank.tgf")]

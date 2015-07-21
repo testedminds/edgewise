@@ -1,5 +1,4 @@
-(ns edgewise.traversal
-  (:require [edgewise.util :refer [select-vals]]))
+(in-ns 'edgewise.core)
 
 ;; all fn's in this namespace produce traversals
 ;; to allow for easy composition.
