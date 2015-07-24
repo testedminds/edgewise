@@ -15,7 +15,7 @@
         new-v-index (assoc index property update)]
     (assoc g :vertex-index new-v-index)))
 
-(defn- label-index [g label]
+(defn label-index [g label]
   (((:vertex-index g) :label) label))
 
 (defn add-vertex
