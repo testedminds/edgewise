@@ -6,8 +6,7 @@
            (frequencies
             (flatten
              (map :vertex
-              (rest
-               (take n (iterate #(inV (outE %)) t))))))))
+              (take n (iterate #(inV (outE %)) t)))))))
 
 ;; takes a histogram of values (a map) and a traversal
 (defn groupcount [hist t]
