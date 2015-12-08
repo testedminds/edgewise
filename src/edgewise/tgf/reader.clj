@@ -4,7 +4,7 @@
 
 (defn- line->vertex [g line]
   (let [[x label] (rest (re-matches #"(\d+) (.+)$" line))]
-    (add-vertex g (Integer. x) label)))
+    (add-vertex g label {:_id (Integer. x)})))
 
 (defn- line->edge [g line]
   (let [[x y lbl] (rest (re-matches #"(\d+) (\d+)( .+)?$" line))
