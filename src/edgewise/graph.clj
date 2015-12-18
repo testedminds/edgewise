@@ -61,3 +61,13 @@
 (defn add-edge
   ([g source-id target-id props] (add-edge* g source-id target-id props))
   ([g source-id target-id] (add-edge g source-id target-id {})))
+
+(defn add-undirected-edge
+  ([g i j props]
+   (-> g
+       (add-edge i j props)
+       (add-edge j i props)))
+  ([g i j]
+   (-> g
+       (add-edge i j {})
+       (add-edge j i {}))))

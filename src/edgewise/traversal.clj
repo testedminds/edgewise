@@ -1,37 +1,57 @@
 (in-ns 'edgewise.core)
 
-;; all fn's in this namespace produce traversals
-;; to allow for easy composition.
+;; all fn's in this namespace produce traversals to allow for easy composition.
 
 (defn traversal [g v-ids e-ids]
   {:g g :vertex v-ids :edge e-ids})
 
 (defn v
-  ([g] (traversal g (keys (:vertex-data g)) []))
-  ([g id] (traversal g [id] []))
+  ([g] (traversal g
+                  (keys (:vertex-data g))
+                  []))
+  ([g id] (traversal g
+                     [id]
+                     []))
   ([g property value]
-   (traversal g [(((:vertex-index g) property) value)] [])))
+   (traversal g
+              [(((:vertex-index g) property) value)]
+              [])))
 
 (defn e
-  ([g] (traversal g [] (keys (:edge-data g))))
-  ([g id] (traversal g [] [id])))
+  ([g] (traversal g
+                  []
+                  (keys (:edge-data g))))
+  ([g id] (traversal g
+                     []
+                     [id])))
 
-(defn inE [t]
-  (traversal (:g t) []
-    (mapcat :inE
-            (select-vals (:vertex-data (:g t)) (:vertex t)))))
+(defn- edge-traversal
+  ([dir t]
+   (traversal (:g t)
+              []
+              (mapcat dir (select-vals (:vertex-data (:g t)) (:vertex t)))))
+  ([dir t pred]
+   (let [edge-ids (mapcat dir (select-vals (:vertex-data (:g t)) (:vertex t)))
+         all-edges (:edge-data (:g t))]
+     (traversal (:g t)
+                []
+                (map :_id (filter pred (select-vals all-edges edge-ids)))))))
 
-(defn outE [t]
-  (traversal (:g t) []
-    (mapcat :outE
-            (select-vals (:vertex-data (:g t)) (:vertex t)))))
+(defn inE
+  ([t] (edge-traversal :inE t))
+  ([t pred] (edge-traversal :inE t pred)))
+
+;; takes a predicate like #(= "acted in" (:type %)) for any edge property.
+(defn outE
+  ([t] (edge-traversal :outE t))
+  ([t pred] (edge-traversal :outE t pred)))
 
 (defn inV [t]
   (traversal (:g t)
-   (map :inV
-        (select-vals (:edge-data (:g t)) (:edge t))) []))
+             (map :inV (select-vals (:edge-data (:g t)) (:edge t)))
+             []))
 
 (defn outV [t]
   (traversal (:g t)
-   (map :outV
-        (select-vals (:edge-data (:g t)) (:edge t))) []))
+             (map :outV (select-vals (:edge-data (:g t)) (:edge t)))
+             []))
