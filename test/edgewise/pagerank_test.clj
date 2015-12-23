@@ -53,7 +53,10 @@
 
 (deftest quick-perf
   (dotimes [x 3]
-    (let [start (. System (nanoTime))
+    (let [limit-ms 2000
+          start (. System (nanoTime))
           ranks (pagerank example 50000)
-          stop (. System (nanoTime))]
-      (spit "/tmp/pagerank.csv" (prn-str (/ (double (- stop start)) 1000000.0)) :append true))))
+          stop (. System (nanoTime))
+          runtime (/ (double (- stop start)) 1000000.0)]
+      (spit "/tmp/pagerank.csv" (prn-str runtime) :append true)
+      (is (< runtime limit-ms)))))

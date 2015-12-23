@@ -21,7 +21,7 @@
 (defn- new-increment-rank
   [data]
   (let [all-v-ids (keys (:g data))
-        updates (pmap #(rank-to-neighbors data %) all-v-ids)
+        updates (map #(rank-to-neighbors data %) all-v-ids)
         new-rank-increments (apply merge-with + updates)]
     (reduce #(rank new-rank-increments %1 %2) data all-v-ids)))
 
