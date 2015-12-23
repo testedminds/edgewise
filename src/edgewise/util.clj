@@ -12,3 +12,7 @@
            ret)
          (next keys)))
       ret)))
+
+(defn nearly [expected actual]
+  (let [epsilon 0.0001]
+    (< (Math/abs (- expected actual)) epsilon)))
