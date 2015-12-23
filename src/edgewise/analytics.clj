@@ -1,14 +1,5 @@
 (in-ns 'edgewise.core)
 
-;; eigenvector rank algorithm
-(defn flowrank [n t]
-  (sort-by val >
-           (frequencies
-            (flatten
-             (map :vertex
-              (rest
-               (take n (iterate #(inV (outE %)) t))))))))
-
 (defn props
   ([t]
    (if (seq (:vertex t))
