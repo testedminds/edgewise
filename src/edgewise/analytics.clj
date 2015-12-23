@@ -8,10 +8,6 @@
              (map :vertex
               (take n (iterate #(inV (outE %)) t)))))))
 
-;; takes a histogram of values (a map) and a traversal
-(defn groupcount [hist t]
-  (merge-with + hist (frequencies (:vertex t))))
-
 (defn props
   ([t]
    (if (seq (:vertex t))

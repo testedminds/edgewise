@@ -4,4 +4,4 @@
 (load "graph")
 (load "traversal")
 (load "analytics")
-
+(load "pagerank/pagerank")

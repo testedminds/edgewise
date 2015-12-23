@@ -20,10 +20,8 @@
                          (map (fn [[id lbl]] (str id " " lbl))))]
        (.write w vertex)
        (.newLine w))
-
      (.write w "#")
      (.newLine w)
-
      (doseq [edge (->> (props (e g) :outV :inV :label)
                     (map (fn [[outv inv lbl]]
                            (str outv " " inv
