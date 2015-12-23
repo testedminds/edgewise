@@ -1,7 +1,8 @@
 (ns edgewise.pagerank-test
   (:require [edgewise.core :refer :all]
+            [edgewise.pagerank.diffusion :refer :all]
             [edgewise.util :as util]
-            [clojure.test  :refer :all]))
+            [clojure.test :refer :all]))
 
 ;; source: https://en.wikipedia.org/wiki/PageRank#/media/File:PageRanks-Example.svg
 (def example (-> (empty-graph)

@@ -5,4 +5,4 @@
 (load "traversal")
 (load "analytics")
 (load "paths")
-(load "pagerank")
+(load "pagerank/pagerank")
