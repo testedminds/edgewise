@@ -1,4 +1,4 @@
-(defproject edgewise "0.1.0-SNAPSHOT"
+(defproject edgewise "0.2.0-SNAPSHOT"
   :description "Edgewise is a simple utility to cleanse, fold, and manipulate networks in Clojure."
   :url "edgewise.testedminds.com"
   :license {:name "Apache License, Version 2.0"
