@@ -1,5 +1,7 @@
 (in-ns 'edgewise.core)
 
+;; All fn's return a graph:
+
 (defn empty-graph []
   {:vertex-id 0
    :edge-id 0
@@ -71,3 +73,19 @@
    (-> g
        (add-edge i j {})
        (add-edge j i {}))))
+
+(defn- remove-edge-from-vertex
+  [g edge-id vertex-id]
+  (let [vertex (-> g :vertex-data (get vertex-id))
+        new-oute (remove #{edge-id} (:outE vertex))
+        new-ine  (remove #{edge-id} (:inE  vertex))
+        new-vertex (-> vertex (assoc :outE new-oute) (assoc :inE new-ine))]
+    (assoc-in g [:vertex-data vertex-id] new-vertex)))
+
+(defn remove-edge
+  [g edge-id]
+  (let [edge ((:edge-data g) edge-id)
+        new-edge-data (dissoc (:edge-data g) edge-id)]
+    (-> (assoc g :edge-data new-edge-data)
+        (remove-edge-from-vertex edge-id (:outV edge))
+        (remove-edge-from-vertex edge-id (:inV  edge)))))

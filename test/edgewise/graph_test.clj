@@ -43,3 +43,11 @@
               (add-vertex "ORD" {:name "Chicago O'Hare International Airport" :_id "home"}))]
     (is (= [["Chicago O'Hare International Airport"]] (-> (v g "home") (props :name))))))
 
+(deftest should-remove-edges
+  (let [g (-> (empty-graph)
+              (add-edge "1" "2")
+              (add-edge "2" "3")
+              (add-edge "3" "4")
+              (remove-edge 0))]
+    (is (= 2 (-> g e props count)))
+    (is (= 0 (-> g (v 0) outE :edge count)))))
