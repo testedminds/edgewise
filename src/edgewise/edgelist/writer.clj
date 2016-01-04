@@ -9,7 +9,7 @@
         label #(-> (v g %) (props :label) ffirst)]
     [(label outv) (label inv)]))
 
-(defn- edgelist->csv
+(defn edgelist->csv
   [edges file]
   (with-open [w (clojure.java.io/writer file)]
     (doseq [[outv inv] edges]

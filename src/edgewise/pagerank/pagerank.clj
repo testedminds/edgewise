@@ -11,7 +11,7 @@
 (defn valid-ranks!
   [ranks]
   (let [sum-of-rank (apply + (map second ranks))]
-    (assert (util/nearly 1 sum-of-rank) "rank should sum to nearly 1.0")
+    (assert (util/nearly 1 sum-of-rank) (str "rank should sum to nearly 1.0, but was " sum-of-rank))
     ranks))
 
 ;; A PageRank of 0.5 means there is a 50% chance that a person clicking on a random link

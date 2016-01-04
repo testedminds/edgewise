@@ -5,3 +5,5 @@
 (load "traversal")
 (load "analytics")
 (load "pagerank/pagerank")
+(load "degree")
+(load "loops")
