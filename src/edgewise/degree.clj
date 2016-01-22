@@ -18,8 +18,8 @@
   "Returns a map from :out and :in degrees k to the number of vertices with degree k in g."
   [g]
   (let [g-degrees (vals (degrees g))]
-    {:out (frequencies (pmap :out  g-degrees))
-     :in  (frequencies (pmap :in   g-degrees))}))
+    {:out (frequencies (pmap :out g-degrees))
+     :in  (frequencies (pmap :in  g-degrees))}))
 
 (defn- degree-distribution->csv* [g file direction]
   (-> g
