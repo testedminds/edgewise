@@ -8,10 +8,22 @@
 ;; @@
 
 ;; @@
-(defn- id->label
-  "[id rank]->[label rank]"
-  [g ranks]
-  (map (fn [[id rank]] [(-> (v g id) (props :label) ffirst) rank]) ranks))
+(declare valid-ranks! id->label)
+;; @@
+
+;; **
+;;; A PageRank of 0.5 means there is a 50% chance that a person clicking on a random link will be directed to the document with the 0.5 PageRank.
+;;; 
+;; **
+
+;; @@
+(defn pagerank
+  ([g num-iterations] (pagerank g num-iterations 0.85))
+  ([g num-iterations damping-factor]
+   (->> (pd/diffusion g damping-factor num-iterations)
+        valid-ranks!
+        (sort-by val >)
+        (id->label g))))
 ;; @@
 
 ;; @@
@@ -23,13 +35,8 @@
 ;; @@
 
 ;; @@
-;; A PageRank of 0.5 means there is a 50% chance that a person clicking on a random link
-;; will be directed to the document with the 0.5 PageRank.
-(defn pagerank
-  ([g num-iterations] (pagerank g num-iterations 0.85))
-  ([g num-iterations damping-factor]
-   (->> (pd/diffusion g damping-factor num-iterations)
-        valid-ranks!
-        (sort-by val >)
-        (id->label g))))
+(defn- id->label
+  "[id rank]->[label rank]"
+  [g ranks]
+  (map (fn [[id rank]] [(-> (v g id) (props :label) ffirst) rank]) ranks))
 ;; @@
