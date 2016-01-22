@@ -18,7 +18,7 @@ edgewise -> ...
 
 ## Usage
 
-Coming soon...
+• [Basic traversals and PageRank](http://viewer.gorilla-repl.org/view.html?source=github&user=bobbyno&repo=edgewise&path=test/edgewise/pagerank_test.clj)
 
 
 ## License
