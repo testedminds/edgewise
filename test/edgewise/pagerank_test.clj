@@ -1,10 +1,10 @@
+;; See doc/pagerank.clj for more detail.
+
 (ns edgewise.pagerank-test
   (:require [clojure.test :refer :all]
             [edgewise.core :refer :all]
             [edgewise.pagerank.diffusion :refer :all]
             [edgewise.util :as util]))
-
-;; See doc/pagerank.clj
 
 (def example (-> (empty-graph)
                  (add-edge "B" "C")

@@ -36,8 +36,6 @@
 (source test/example)
 ;; @@
 ;; ->
-;;; ;; See doc/pagerank.clj
-;;;
 ;;; (def example (-&gt; (empty-graph)
 ;;;                  (add-edge &quot;B&quot; &quot;C&quot;)
 ;;;                  (add-edge &quot;C&quot; &quot;B&quot;)
