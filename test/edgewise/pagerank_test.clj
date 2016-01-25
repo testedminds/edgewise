@@ -4,6 +4,8 @@
             [edgewise.pagerank.diffusion :refer :all]
             [edgewise.util :as util]))
 
+;; See doc/pagerank.clj
+
 (def example (-> (empty-graph)
                  (add-edge "B" "C")
                  (add-edge "C" "B")
@@ -23,6 +25,11 @@
                  (add-edge "K" "E")
                  (add-edge "K" "B")))
 
+;; A challenge with test-driving iterated numeric algorithms such as this is determining expected values before the code
+;; has been written. The PageRank algorithm is simple enough that this can be worked out in a tool like Excel or even by
+;; hand, but in this case, these values were produced by [NetLogo](http://ccl.northwestern.edu/netlogo/models/PageRank).
+;; These values match the Wikipedia example above when intertreted as a probability between zero and one instead of as
+;; percentage:
 (def ranks-after-50-iterations
   {0  0.3843697810
    1  0.3429414534
