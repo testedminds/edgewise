@@ -10,8 +10,8 @@
   "Returns a map from the :label of the vertices of g to the number of edges of the vertex as [out-degree in-degree]."
   [g]
   (reduce #(assoc %1 (-> g (v %2) (props :label) ffirst)
-                  {:out (-> (v g %2) outE props count)
-                   :in  (-> (v g %2) inE  props count)})
+                  {:out (-> (v g %2) out-e props count)
+                   :in  (-> (v g %2) in-e  props count)})
           {} (keys (:vertex-data g))))
 
 (defn degree-distribution

@@ -7,7 +7,7 @@
    (let [vertices (->> (props (v g) :_id :label)
                        (map (fn [[id lbl]] (str id " " lbl "\n")))
                        (apply str))
-         edges (->> (props (e g) :outV :inV :label)
+         edges (->> (props (e g) :out-v :in-v :label)
                     (map (fn [[outv inv lbl]]
                            (str outv " " inv
                                 (when (not-empty lbl) (str " " lbl)) "\n")))
@@ -22,7 +22,7 @@
        (.newLine w))
      (.write w "#")
      (.newLine w)
-     (doseq [edge (->> (props (e g) :outV :inV :label)
+     (doseq [edge (->> (props (e g) :out-v :in-v :label)
                     (map (fn [[outv inv lbl]]
                            (str outv " " inv
                                 (when (not-empty lbl) (str " " lbl))))))]

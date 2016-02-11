@@ -4,8 +4,8 @@
 
 (defn- edge-data->labels
   [g edge-data]
-  (let [outv (:outV edge-data)
-        inv  (:inV  edge-data)
+  (let [outv (:out-v edge-data)
+        inv  (:in-v  edge-data)
         label #(-> (v g %) (props :label) ffirst)]
     [(label outv) (label inv)]))
 
