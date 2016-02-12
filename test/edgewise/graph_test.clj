@@ -51,3 +51,25 @@
               (remove-edge 0))]
     (is (= 2 (-> g e props count)))
     (is (= 0 (-> g (v 0) out-e :edge count)))))
+
+(deftest should-traverse-edges-with-predicates
+  ;; traverse a co-starred / co-directed network using predicates
+  (let [g (-> (empty-graph)
+              (add-bi-edge "Christopher Walken" "Sean Penn" {:movie "At Close Range" :year 1986 :job "acted"})
+              (add-bi-edge "Sean Penn" "Kevin Bacon" {:movie "Mystic River" :year 2003 :job "acted"})
+              (add-bi-edge "Quentin Tarantino" "Robert Rodriguez" {:movie "Four Rooms" :year 1995 :job "directed"}))]
+    (testing "Finding the co-stars in all movies made before 2000:"
+      (is (= #{"Christopher Walken" "Sean Penn"} (-> (v g)
+                                                     (out #(and (< (:year %) 2000)
+                                                                (= (:job %) "acted")))
+                                                     (props :label)
+                                                     flatten
+                                                     set))))
+    (testing "Finding the co-directors of all movies made in the nineties:"
+      (is (= #{"Quentin Tarantino" "Robert Rodriguez"} (-> (v g)
+                                                           (out #(and (>= (:year %) 1990)
+                                                                      (<= (:year %) 1999)
+                                                                      (= (:job %) "directed")))
+                                                           (props :label)
+                                                           flatten
+                                                           set))))))

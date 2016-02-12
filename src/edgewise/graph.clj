@@ -64,7 +64,8 @@
   ([g source-id target-id props] (add-edge* g source-id target-id props))
   ([g source-id target-id] (add-edge g source-id target-id {})))
 
-(defn add-undirected-edge
+(defn add-bi-edge
+  "Add two edges to represent bi-directional or undirected relationships."
   ([g i j props]
    (-> g
        (add-edge i j props)
