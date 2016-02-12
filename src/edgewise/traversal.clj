@@ -37,21 +37,29 @@
                 []
                 (map :_id (filter pred (select-vals all-edges edge-ids)))))))
 
-(defn inE
-  ([t] (edge-traversal :inE t))
-  ([t pred] (edge-traversal :inE t pred)))
+(defn in-e
+  ([t] (edge-traversal :in-e t))
+  ;; takes a predicate like #(= "acted in" (:type %)) for any edge property.
+  ([t pred] (edge-traversal :in-e t pred)))
 
-;; takes a predicate like #(= "acted in" (:type %)) for any edge property.
-(defn outE
-  ([t] (edge-traversal :outE t))
-  ([t pred] (edge-traversal :outE t pred)))
+(defn out-e
+  ([t] (edge-traversal :out-e t))
+  ([t pred] (edge-traversal :out-e t pred)))
 
-(defn inV [t]
+(defn in-v [t]
   (traversal (:g t)
-             (map :inV (select-vals (:edge-data (:g t)) (:edge t)))
+             (map :in-v (select-vals (:edge-data (:g t)) (:edge t)))
              []))
 
-(defn outV [t]
+(defn out-v [t]
   (traversal (:g t)
-             (map :outV (select-vals (:edge-data (:g t)) (:edge t)))
+             (map :out-v (select-vals (:edge-data (:g t)) (:edge t)))
              []))
+
+(defn in
+  ([t] (out-v (in-e t)))
+  ([t pred] (out-v (in-e t pred))))
+
+(defn out
+  ([t] (in-v (out-e t)))
+  ([t pred] (in-v (out-e t pred))))

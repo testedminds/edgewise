@@ -24,7 +24,7 @@
   ([g label props]
    (let [id (or (:_id props) (:vertex-id g))
          existing (or ((:vertex-data g) id) (label-index g label))
-         v (assoc props :outE [] :inE [] :label label :_id id)
+         v (assoc props :out-e [] :in-e [] :label label :_id id)
          new-v-data (assoc (:vertex-data g) id v)]
      (if existing g
          (-> (assoc g :vertex-data new-v-data)
@@ -33,12 +33,12 @@
 
 (defn- add-edge-by-id [g source-id target-id props]
   (let [next-e-id (:edge-id g)
-        edge (assoc props :outV source-id :inV target-id :_id next-e-id)
+        edge (assoc props :out-v source-id :in-v target-id :_id next-e-id)
         v (:vertex-data g)
-        new-out-e (conj ((v source-id) :outE) next-e-id)
-        new-out-v (assoc (v source-id) :outE new-out-e)
-        new-in-e  (conj ((v target-id) :inE) next-e-id)
-        new-in-v  (assoc (v target-id) :inE new-in-e)
+        new-out-e (conj ((v source-id) :out-e) next-e-id)
+        new-out-v (assoc (v source-id) :out-e new-out-e)
+        new-in-e  (conj ((v target-id) :in-e) next-e-id)
+        new-in-v  (assoc (v target-id) :in-e new-in-e)
         new-edge-data (assoc (:edge-data g) next-e-id edge)
         new-vertex-data (-> (assoc v source-id new-out-v)
                             (assoc target-id new-in-v))]
@@ -64,7 +64,8 @@
   ([g source-id target-id props] (add-edge* g source-id target-id props))
   ([g source-id target-id] (add-edge g source-id target-id {})))
 
-(defn add-undirected-edge
+(defn add-bi-edge
+  "Add two edges to represent bi-directional or undirected relationships."
   ([g i j props]
    (-> g
        (add-edge i j props)
@@ -77,9 +78,9 @@
 (defn- remove-edge-from-vertex
   [g edge-id vertex-id]
   (let [vertex (-> g :vertex-data (get vertex-id))
-        new-oute (remove #{edge-id} (:outE vertex))
-        new-ine  (remove #{edge-id} (:inE  vertex))
-        new-vertex (-> vertex (assoc :outE new-oute) (assoc :inE new-ine))]
+        new-oute (remove #{edge-id} (:out-e vertex))
+        new-ine  (remove #{edge-id} (:in-e  vertex))
+        new-vertex (-> vertex (assoc :out-e new-oute) (assoc :in-e new-ine))]
     (assoc-in g [:vertex-data vertex-id] new-vertex)))
 
 (defn remove-edge
@@ -87,5 +88,5 @@
   (let [edge ((:edge-data g) edge-id)
         new-edge-data (dissoc (:edge-data g) edge-id)]
     (-> (assoc g :edge-data new-edge-data)
-        (remove-edge-from-vertex edge-id (:outV edge))
-        (remove-edge-from-vertex edge-id (:inV  edge)))))
+        (remove-edge-from-vertex edge-id (:out-v edge))
+        (remove-edge-from-vertex edge-id (:in-v  edge)))))
