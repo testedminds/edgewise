@@ -18,8 +18,8 @@
   (let [g (-> (empty-graph)
               (add-edge "ORD" "MIA")
               (add-edge "LAX" "MIA"))]
-    (is (= [["MIA"]] (-> (v g 0) out-e in-v (props :label))))
-    (is (= [["ORD" 0] ["LAX" 2]] (-> (v g 1) in-e out-v (props :label :_id))))
+    (is (= [["MIA"]] (-> (v g 0) out (props :label))))
+    (is (= [["ORD" 0] ["LAX" 2]] (-> (v g 1) in (props :label :_id))))
     (is (= 3 (count (:vertex (v g)))))))
 
 (deftest adding-edges-by-id-is-equivalent-to-label
@@ -29,8 +29,8 @@
               (add-vertex "LAX")
               (add-edge 0 1)
               (add-edge 2 1))]
-    (is (= [["MIA"]] (-> (v g 0) out-e in-v (props :label))))
-    (is (= [["ORD" 0] ["LAX" 2]] (-> (v g 1) in-e out-v (props :label :_id))))
+    (is (= [["MIA"]] (-> g (v (label-index g "ORD")) out (props :label))))
+    (is (= [["ORD" 0] ["LAX" 2]] (-> g (v (label-index g "MIA")) in (props :label :_id))))
     (is (= 3 (count (:vertex (v g)))))))
 
 (deftest should-add-vertices-with-properties-but-no-id

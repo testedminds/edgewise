@@ -7,4 +7,4 @@
   (let [g (edgelist->g "data/edgelist.txt")
         id (label-index g "foo")]
     (is (= 4 (count (:vertex-data g))))
-    (is (= "bar" (-> g (v id) out-e in-v (props :label) ffirst)))))
+    (is (= "bar" (-> g (v id) out (props :label) ffirst)))))

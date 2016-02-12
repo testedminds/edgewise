@@ -12,4 +12,4 @@
   "Create a simplified representation of the graph: {vertex-id [neighbor-v-ids]}"
   [g]
   (let [all-v-ids (:vertex (v g))]
-    (reduce #(assoc %1 %2 (-> (v g %2) out-e in-v (props :_id) flatten)) {} all-v-ids)))
+    (reduce #(assoc %1 %2 (-> (v g %2) out (props :_id) flatten)) {} all-v-ids)))
