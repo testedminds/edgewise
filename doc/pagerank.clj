@@ -233,7 +233,7 @@
 ;;;
 ;;; Recall that @@1-d@@ is the probability of jumping to a random vertex. If we set @@d = 1@@, we remove the effect of damping. Without damping, all rank will diffuse to vertices B and C, and all other vertices will have a PageRank of 0.
 ;;;
-;;; C actually becomes the most central vertex in this scenario; rank entering through B and only slowly diffuses out:
+;;; C actually becomes the most central vertex in this scenario; rank enters through B and only slowly diffuses out:
 ;; **
 
 ;; @@
@@ -253,3 +253,16 @@
 ;;;  [&quot;I&quot; 0.0])
 ;;;
 ;; <-
+
+;; **
+;;; <div style="color: white;">-</div>
+;;;
+;;; <script type="text/javascript">
+;;; function resize() {
+;;;   var height = document.getElementsByTagName("html")[0].scrollHeight;
+;;;   window.parent.postMessage(["setHeight", height], "*");
+;;; }
+;;;
+;;; resize();
+;;; </script>
+;; **
