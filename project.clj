@@ -1,6 +1,6 @@
-(defproject edgewise "0.3.0-SNAPSHOT"
-  :description "Edgewise is a simple utility to cleanse, fold, and manipulate networks in Clojure."
-  :url "edgewise.testedminds.com"
+(defproject edgewise "0.3.0"
+  :description "Edgewise is a simple library for representing and computing on networks (graphs) in Clojure."
+  :url "https://github.com/testedminds/edgewise"
   :license {:name "Apache License, Version 2.0"
             :url "http://www.apache.org/licenses/LICENSE-2.0.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]]
