@@ -2,6 +2,8 @@
 
 Edgewise is a simple library for representing and computing on networks (graphs) in Clojure.
 
+[![Clojars Project](https://img.shields.io/clojars/v/edgewise.svg)](https://clojars.org/edgewise)
+
 
 ## Usage
 
