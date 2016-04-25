@@ -1,4 +1,4 @@
-(defproject edgewise "0.3.0"
+(defproject edgewise "0.3.1-SNAPSHOT"
   :description "Edgewise is a simple library for representing and computing on networks (graphs) in Clojure."
   :url "https://github.com/testedminds/edgewise"
   :license {:name "Apache License, Version 2.0"
