@@ -1,10 +1,11 @@
 (ns edgewise.degree-test
   (:require [clojure.test  :refer :all]
             [edgewise.core :refer :all]
-            [edgewise.tgf  :refer :all]))
+            [edgewise.tgf  :refer :all]
+            [clojure.java.io :as io]))
 
 (deftest degrees-returns-a-map-of-labels-to-a-map-of-in-and-out-degree
-  (let [g (read-tgf (java.io.File. "data/flowrank.tgf"))]
+  (let [g (read-tgf (io/file (io/resource "resources/flowrank.tgf")))]
     (is (= {:out 3, :in 2} (get (degrees g) "6")))))
 
 ;; degree distribution is of the form
@@ -12,7 +13,7 @@
  :in  {"degree k" "number of vertices in g of in-degree k"}}
 
 (deftest test-key-is-degree-and-val-is-number-of-vertices-of-degree
-  (let [g (read-tgf (java.io.File. "data/flowrank.tgf"))
+  (let [g (read-tgf (io/file (io/resource "resources/flowrank.tgf")))
         dd (degree-distribution g)
         num-vertices (count (:vertex (v g)))
         num-edges (count (:edge (e g)))]

@@ -1,10 +1,11 @@
 (ns edgewise.tgf.reader-test
   (:require [clojure.test :refer :all]
             [edgewise.core :refer :all]
-            [edgewise.tgf :refer :all]))
+            [edgewise.tgf :refer :all]
+            [clojure.java.io :as io]))
 
 (deftest should-read-tgf-from-file
-  (let [g (read-tgf (java.io.File. "data/flowrank.tgf"))]
+  (let [g (read-tgf (io/file (io/resource "resources/flowrank.tgf")))]
     (is (= 8 (-> g v :vertex count)))
     (is (= [5 6] (-> g (v 7) out :vertex sort)))))
 
