@@ -15,9 +15,11 @@
     ranks))
 
 (defn pagerank
-  ([g num-iterations] (pagerank g num-iterations 0.85))
-  ([g num-iterations damping-factor]
-   (->> (pd/diffusion g damping-factor num-iterations)
-        valid-ranks!
-        (sort-by val >)
-        (id->label g))))
+  ([g max-iterations] (pagerank g max-iterations 0.85))
+  ([g max-iterations damping-factor]
+   (let [ranks (pd/diffusion g damping-factor (pd/to-convergence max-iterations))
+         result (->> ranks
+                     valid-ranks!
+                     (sort-by val >)
+                     (id->label g))]
+     (with-meta result (meta ranks)))))

@@ -28,8 +28,8 @@
 ;; A challenge with test-driving iterated numeric algorithms such as this is determining expected values before the code
 ;; has been written. The PageRank algorithm is simple enough that this can be worked out in a tool like Excel or even by
 ;; hand, but in this case, these values were produced by [NetLogo](http://ccl.northwestern.edu/netlogo/models/PageRank).
-;; These values match the Wikipedia example above when intertreted as a probability between zero and one instead of as
-;; percentage:
+;; These values match the Wikipedia example in the Gorilla REPL worksheet when interpreted as a probability between zero
+;; and one instead of as a percentage:
 (def ranks-after-50-iterations
   {0  0.3843697810
    1  0.3429414534
@@ -43,17 +43,15 @@
    9  0.0161694790
    10 0.0161694790})
 
-(deftest initially-every-vertex-gets-the-same-rank
-  (let [damping 0.85
-        iterations 0
-        actual (diffusion example damping iterations)
+(deftest should-initially-give-every-vertex-the-same-rank
+  (let [actual (diffusion example 0.85 (to-max-iterations 0))
         n (-> example :vertex-data keys count)
         expected (/ 1 n)]
     (doseq [[k v] actual]
       (is (util/nearly expected (actual k))))))
 
-(deftest should-compute-pagerank-by-diffusion-method
-  (let [actual (diffusion example 0.85 50)
+(deftest should-compute-pagerank-to-max-iterations
+  (let [actual (diffusion example 0.85 (to-max-iterations 50))
         expected ranks-after-50-iterations]
     (doseq [[k v] actual]
       (is (util/nearly (expected k) (actual k))))))
@@ -63,14 +61,12 @@
     (is (= "B" (ffirst ranks)))))
 
 (deftest sum-of-ranks-should-be-nearly-1
-  (is (valid-ranks! (pagerank example 50 0.85))))
+  (is (valid-ranks! (pagerank example 50))))
 
-(deftest simple-perf-test
-  (dotimes [x 3]
-    (let [limit-ms 2000
-          start (. System (nanoTime))
-          ranks (pagerank example 50000)
-          stop (. System (nanoTime))
-          runtime (/ (double (- stop start)) 1000000.0)]
-      (spit "/tmp/pagerank.csv" (prn-str runtime) :append true)
-      (is (< runtime limit-ms)))))
+(deftest should-include-runtime-metadata
+  (let [ranks (pagerank example 100)]
+    (is (= #{:iteration :runtime-millis} (set (keys (meta ranks)))))))
+
+(deftest should-run-to-max-iterations
+  (let [ranks (pagerank example 10)]
+    (is (= 10 (:iteration (meta ranks))))))
